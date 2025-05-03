@@ -1,0 +1,3 @@
+"""
+Neoforge documentation provider
+"""
