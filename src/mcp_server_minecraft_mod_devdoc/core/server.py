@@ -27,8 +27,12 @@ class MCPDocServer:
 
     def _setup_resources(self):
         """Set up the resources for the server"""
+        # Resources have been moved to tools
 
-        @self.mcp.resource("providers://list")
+    def _setup_tools(self):
+        """Set up the tools for the server"""
+
+        @self.mcp.tool()
         def get_providers() -> str:
             """
             Get a list of available documentation providers and their versions
@@ -60,7 +64,7 @@ class MCPDocServer:
 
             return "\n".join(result)
 
-        @self.mcp.resource("structure://{provider}/{version}")
+        @self.mcp.tool()
         def get_structure(provider: str, version: str) -> str:
             """
             Get the file structure with previews for a specific version of documentation
@@ -73,9 +77,6 @@ class MCPDocServer:
                 return f"Error: Provider '{provider}' not found. Available providers: {', '.join(self.providers.keys())}"
 
             return self.providers[provider].get_structure(version)
-
-    def _setup_tools(self):
-        """Set up the tools for the server"""
 
         @self.mcp.tool()
         def get_full_content(provider: str, version: str, file_path: str) -> str:
